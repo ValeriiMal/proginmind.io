@@ -28,6 +28,7 @@ module.exports = {
       twitter: 'https://twitter.com/valeriimaltsev',
       github: 'https://github.com/ValeriiMal',
       rss: '#',
+      vk: '#',
     },
   },
   plugins: [
