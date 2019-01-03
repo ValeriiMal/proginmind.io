@@ -4,6 +4,7 @@
   "description": "Simple starter for Gatsby",
   "main": "n/a",
   "scripts": {
+    "start": "npm run develop",
     "develop": "gatsby develop",
     "build": "gatsby build",
     "clean:public": "rm -rf public",
