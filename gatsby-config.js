@@ -6,8 +6,7 @@ module.exports = {
     url: 'https://proginmind.io',
     title: 'Blog by Valerii Maltsev',
     subtitle: `
-      Write code and articles. Like to share my knowladge and learn something
-      new. Like to be a software engineer, develop web applications
+      all(identity, [Write JavaScript, share knowladge, develop web applications])
     `,
     copyright: '',
     disqusShortname: '',
@@ -25,10 +24,11 @@ module.exports = {
       name: 'Valerii Maltsev',
       email: 'valmal24.work@gmail.com',
       telegram: '#',
-      twitter: 'https://twitter.com/valeriimaltsev',
-      github: 'https://github.com/ValeriiMal',
+      twitter: 'valeriimaltsev',
+      github: 'ValeriiMal',
       rss: '#',
       vk: '#',
+      linkedin: 'in/valerii-maltsev-aa75a1b0/',
     },
   },
   plugins: [
