@@ -1,7 +1,7 @@
 {
-  "version": "3.0.0",
-  "name": "gatsby-v2-starter-lumen",
-  "description": "Simple starter for Gatsby",
+  "version": "0.0.1",
+  "name": "proginmind.io",
+  "description": "Blog by Valerii Maltsev",
   "main": "n/a",
   "scripts": {
     "start": "npm run develop",
@@ -14,15 +14,16 @@
     "format": "prettier --write './*.js' 'src/**/*.js' 'src/**/*.jsx'",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public"
   },
-  "repository": "git+https://github.com/alxshelepenok/gatsby-starter-lumen.git",
+  "repository": "git+https://github.com/ValeriiMal/proginmind.io.git",
   "keywords": [
     "gatsby",
     "blog",
     "react",
     "theme",
-    "starter"
+	"Valerii Maltsev",
+	"javascript"
   ],
-  "author": "Alexander Shelepenok <alxshelepenok@gmail.com>",
+  "author": "Valerii Maltsev <valmal24.work@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "bluebird": "^3.5.1",
