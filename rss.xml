@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Blog by Valerii Maltsev]]></title><description><![CDATA[
       all(identity, [Write JavaScript, share knowladge, develop web applications])
-    ]]></description><link>https://proginmind.io</link><generator>RSS for Node</generator><lastBuildDate>Mon, 07 Jan 2019 21:03:37 GMT</lastBuildDate><item><title><![CDATA[Window Popup Implementation]]></title><description><![CDATA[How to implement login popup or connect google service popup]]></description><link>https://proginmind.io/posts/integration-popup-implementation/</link><guid isPermaLink="false">https://proginmind.io/posts/integration-popup-implementation/</guid><pubDate>Thu, 03 Jan 2019 16:51:00 GMT</pubDate><content:encoded>&lt;h2&gt;Task&lt;/h2&gt;
+    ]]></description><link>https://proginmind.io</link><generator>RSS for Node</generator><lastBuildDate>Mon, 07 Jan 2019 21:07:31 GMT</lastBuildDate><item><title><![CDATA[Window Popup Implementation]]></title><description><![CDATA[How to implement login popup or connect google service popup]]></description><link>https://proginmind.io/posts/integration-popup-implementation/</link><guid isPermaLink="false">https://proginmind.io/posts/integration-popup-implementation/</guid><pubDate>Thu, 03 Jan 2019 16:51:00 GMT</pubDate><content:encoded>&lt;h2&gt;Task&lt;/h2&gt;
 &lt;p&gt;For me, this kind of window popup was useful for integration google
 calendar with our application, so that a user can connect its google calendar
 and manage events (e.g. meetings) through our application.&lt;/p&gt;
@@ -24,4 +24,5 @@ popup&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;window&lt;spa
 &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; result &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;googleOAuthFlow&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;token comment&quot;&gt;// check result&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Secondly&lt;/p&gt;
-&lt;p&gt;Thirdly and so on&lt;/p&gt;</content:encoded></item></channel></rss>
+&lt;p&gt;Thirdly and so on&lt;/p&gt;
+&lt;p&gt;HAHAHA testing fun&lt;/p&gt;</content:encoded></item></channel></rss>
