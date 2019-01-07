@@ -1,5 +1,5 @@
 {
-  "version": "0.0.1",
+  "version": "0.0.2",
   "name": "proginmind.io",
   "description": "Blog by Valerii Maltsev",
   "main": "n/a",
@@ -20,8 +20,8 @@
     "blog",
     "react",
     "theme",
-	"Valerii Maltsev",
-	"javascript"
+    "Valerii Maltsev",
+    "javascript"
   ],
   "author": "Valerii Maltsev <valmal24.work@gmail.com>",
   "license": "MIT",
@@ -34,6 +34,7 @@
     "gatsby-plugin-google-fonts": "latest",
     "gatsby-plugin-offline": "^2.0.6",
     "gatsby-plugin-react-helmet": "^3.0.0",
+    "gatsby-plugin-remove-serviceworker": "^1.0.0",
     "gatsby-plugin-sass": "^2.0.1",
     "gatsby-plugin-sharp": "^2.0.6",
     "gatsby-plugin-sitemap": "^2.0.1",
