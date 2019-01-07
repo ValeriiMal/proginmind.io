@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Blog by Valerii Maltsev]]></title><description><![CDATA[
+      all(identity, [Write JavaScript, share knowladge, develop web applications])
+    ]]></description><link>https://proginmind.io</link><generator>RSS for Node</generator><lastBuildDate>Mon, 07 Jan 2019 19:43:32 GMT</lastBuildDate><item><title><![CDATA[Window Popup Implementation]]></title><description><![CDATA[How to implement login popup or connect google service popup]]></description><link>https://proginmind.io/posts/integration-popup-implementation/</link><guid isPermaLink="false">https://proginmind.io/posts/integration-popup-implementation/</guid><pubDate>Thu, 03 Jan 2019 16:51:00 GMT</pubDate><content:encoded>&lt;h2&gt;Task&lt;/h2&gt;
+&lt;p&gt;For me, this kind of window popup was useful for integration google
+calendar with our application, so that a user can connect its google calendar
+and manage events (e.g. meetings) through our application.&lt;/p&gt;
+&lt;h2&gt;User steps&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;click on “Connect Google Calendar” button&lt;/li&gt;
+&lt;li&gt;window popup opens with link to google oauth flow&lt;/li&gt;
+&lt;li&gt;user sign in google account&lt;/li&gt;
+&lt;li&gt;user allow connection project to its google account&lt;/li&gt;
+&lt;li&gt;google oauth flow redirects user to provided earlier url that points to api url&lt;/li&gt;
+&lt;li&gt;api read code and state params and redirects back to web app redurect link&lt;/li&gt;
+&lt;li&gt;web app close popup and notify user about successful or failed result&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Solution&lt;/h2&gt;
+&lt;p&gt;Firstly lets bring high level overview of steps that should be implemented&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// this is inside async function&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; popup &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; window&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;newpopup&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;width=100,height=100,top=100,right=100&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; url &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;getGoogleUrl&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+popup&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;window&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;location&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;href &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; url&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;// google async oauth flow&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; result &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;googleOAuthFlow&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;// check result&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item></channel></rss>
