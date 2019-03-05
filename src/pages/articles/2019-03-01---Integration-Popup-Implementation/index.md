@@ -3,7 +3,7 @@ title: Auth Popup
 date: "2019-01-03T16:51:00.000Z"
 layout: post
 draft: false
-path: "/posts/integration-popup-implementation/"
+path: "/posts/auth-popup-implementation/"
 category: "Javascript"
 tags:
   - "Javascript"
