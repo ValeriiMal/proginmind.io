@@ -10,7 +10,6 @@ class PostTemplate extends React.Component {
     const post = this.props.data.markdownRemark
     const { title: postTitle, description: postDescription } = post.frontmatter
     const description = postDescription !== null ? postDescription : subtitle
-
     return (
       <Layout>
         <div>
@@ -53,6 +52,8 @@ export const pageQuery = graphql`
         tags
         date
         description
+        twitter
+        github
       }
     }
   }

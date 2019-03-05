@@ -5,6 +5,8 @@ layout: post
 draft: false
 path: "/posts/auth-popup-implementation/"
 category: "Javascript"
+twitter: "https://twitter.com/valeriimaltsev/status/1103025489227251713"
+github: "https://github.com/ValeriiMal/proginmind.io/blob/master/src/pages/articles/2019-03-01---Integration-Popup-Implementation/index.md"
 tags:
   - "Javascript"
   - "Web"
