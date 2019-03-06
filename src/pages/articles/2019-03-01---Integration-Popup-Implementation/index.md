@@ -13,16 +13,16 @@ tags:
 description: "How to implement popup for authorization third party APIs"
 ---
 
-It was interesting to me how to implement "Sign in with ..." button. When this button
+It was interesting to me how to implement the "Sign in with ..." button. When this button
 clicked new popup appears and takes care of auth flow. When I implemented that feature
-I decided to introduce solution to the people like one of the possible way to achieve that.
+I decided to introduce a solution to people like one of the possible way to achieve that.
 
-In general there is two main paths:
+In general, there are two main paths:
 
-1. opening popup with correct url
+1. opening popup with correct URL
 2. closing popup and read results of the auth flow
 
-Lets do it step by step
+Let's do it step by step
 
 #### Prerequesites
 [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
@@ -31,41 +31,41 @@ Lets do it step by step
 
 ### Opening popup
 
-Except new window, there are other containers where you can do that auth flow:
+Except for a new window, there are other containers where you can do that auth flow:
 
 * new tab of the browser
 * iframe
 
-For the current example lets take a look at new window popup as a auth flow container.
+For the current example, let's take a look at new window popup as an auth flow container.
 
-There is widely known way to open a popup.
+There is a widely known way to open a popup.
 
 ```javascript
 const popup = window.open(<url>, <name>, <settingstring>);
 ```
 
 Note that `open()` function have to be called synchronously, in other words directly
-in user action listener function. In other case, if you decided to call it asynchronously,
+in user action listener function. In other cases, if you decided to call it asynchronously,
 browsers block such popups.
 
-For example the simplest click handler will be fine:
+For example, the simplest click handler will be fine:
 
 ```javascript
 const signIn = () => {
-	// ...
-	const poppup = window.open(...)
-	// ...
+    // ...
+    const poppup = window.open(...)
+    // ...
 }
 ```
 
 ### Url
 
-Every third party OAuth API provides documentation of how to construct correct url for
-auth flow. One of the main query parameter should be called like `redrect_uri`.
-[There](https://developers.google.com/identity/protocols/OAuth2UserAgent) is google's OAuth flow url parameters documented.
+Every third party OAuth API provides documentation of how to construct correct URL for
+auth flow. One of the main query parameters should be called `redrect_uri`.
+[There](https://developers.google.com/identity/protocols/OAuth2UserAgent) is Google's OAuth flow URL parameters documented.
 Check Step 2 -> OAuth Endpoints tab.
 
-So url for the newly opened popup can be like this:
+So URL for the newly opened popup can be like this:
 
 ```javascript
 const popup = window.open(`https://accounts.google.com/o/oauth2/v2/auth?${queryParamsString}`);
@@ -82,8 +82,8 @@ const queryParamsString = '' +
 'scope=admin'
 ```
 
-Sometimes url for that popup have to be calculated on API side and you as a frontend developer
-have to retreive it first in order to use in your popup. In that case we can always open
+Sometimes URL for that popup have to be calculated on API side and you as a frontend developer
+have to retrieve it first in order to use in your popup. In that case, we can always open
 popup synchronously with blank <url> argument, then load our `redirect_url` from the API and
 set it to our popup using `location` window's API. Just like that:
 
@@ -96,18 +96,18 @@ const clickHandler = async () => {
 
 ```
 
-That will redirect our popup window to the required url. After that action we can't control
-popup behavior any more, except actions like closing that we are not interesting in yet.
+That will redirect our popup window to the required URL. After that action, we can't control
+popup behaviour any more, except actions like closing that we are not interested in yet.
 
 ### Checking popup state
 
-After redurecting popup to the url with different host from our's, we should start process of
+After a redirecting popup to the URL with a different host from our's, we should start the process of
 continuous checking popup's `location.href`. You may notice that trying to read that field
-throws error about restricted access to that field. It is ok, do not try to fix that!
-Instead we should wrap that field access to `try/catch` block.
-On that point we need to use setInterval() with callback that checks location of the popup.
-When you start to have access to `href` field and it is one of `sucess_url` or `error_url` we can
-close popup with `popup.close()` and set according result to our app.
+throws an error about restricted access to that field. It is ok, do not try to fix that!
+Instead, we should wrap that field access to `try/catch` block.
+On that point, we need to use setInterval() with a callback that checks the location of the popup.
+When you start to have access to the `href` field and it is one of `sucess_url` or `error_url` we can
+close popup with `popup.close()` and set according to result to our app.
 
 There is some pseudo code for that implementation:
 
@@ -143,12 +143,12 @@ const checkPopup = (popup) => {
 
 ### And that's it!
 
-Lets review our steps:
+Let's review our steps:
 
 1. open popup synchronously on user action
-2. get popup url either synchronously or asynchronously
-3. set popup.location.href to obtained url
+2. get popup URL either synchronously or asynchronously
+3. set popup.location.href to obtained URL
 4. start popup checking
-5. wait when popup will be redirected back to success or error urls and we can read them
+5. wait when popup will be redirected back to success or error URLs and we can read them
 6. close popup
 7. check the result
