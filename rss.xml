@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Blog by Valerii Maltsev]]></title><description><![CDATA[
       all(identity, [Write JavaScript, share knowladge, develop web applications])
-    ]]></description><link>https://proginmind.io</link><generator>RSS for Node</generator><lastBuildDate>Tue, 05 Mar 2019 20:41:18 GMT</lastBuildDate><item><title><![CDATA[Auth Popup]]></title><description><![CDATA[How to implement popup for authorization third party APIs]]></description><link>https://proginmind.io/posts/auth-popup-implementation/</link><guid isPermaLink="false">https://proginmind.io/posts/auth-popup-implementation/</guid><pubDate>Thu, 03 Jan 2019 16:51:00 GMT</pubDate><content:encoded>&lt;p&gt;It was interesting to me how to implement “Sign in with …” button. When this button
+    ]]></description><link>https://proginmind.io</link><generator>RSS for Node</generator><lastBuildDate>Wed, 06 Mar 2019 08:02:00 GMT</lastBuildDate><item><title><![CDATA[Auth Popup]]></title><description><![CDATA[How to implement popup for authorization third party APIs]]></description><link>https://proginmind.io/posts/auth-popup-implementation/</link><guid isPermaLink="false">https://proginmind.io/posts/auth-popup-implementation/</guid><pubDate>Thu, 03 Jan 2019 16:51:00 GMT</pubDate><content:encoded>&lt;p&gt;It was interesting to me how to implement the “Sign in with …” button. When this button
 clicked new popup appears and takes care of auth flow. When I implemented that feature
-I decided to introduce solution to the people like one of the possible way to achieve that.&lt;/p&gt;
-&lt;p&gt;In general there is two main paths:&lt;/p&gt;
+I decided to introduce a solution to people like one of the possible way to achieve that.&lt;/p&gt;
+&lt;p&gt;In general, there are two main paths:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;opening popup with correct url&lt;/li&gt;
+&lt;li&gt;opening popup with correct URL&lt;/li&gt;
 &lt;li&gt;closing popup and read results of the auth flow&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;Lets do it step by step&lt;/p&gt;
+&lt;p&gt;Let’s do it step by step&lt;/p&gt;
 &lt;h4&gt;Prerequesites&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/JavaScript&quot;&gt;JavaScript&lt;/a&gt;
 &lt;a href=&quot;https://hackernoon.com/understanding-async-await-in-javascript-1d81bb079b2c&quot;&gt;async/await&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;Opening popup&lt;/h3&gt;
-&lt;p&gt;Except new window, there are other containers where you can do that auth flow:&lt;/p&gt;
+&lt;p&gt;Except for a new window, there are other containers where you can do that auth flow:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;new tab of the browser&lt;/li&gt;
 &lt;li&gt;iframe&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;For the current example lets take a look at new window popup as a auth flow container.&lt;/p&gt;
-&lt;p&gt;There is widely known way to open a popup.&lt;/p&gt;
+&lt;p&gt;For the current example, let’s take a look at new window popup as an auth flow container.&lt;/p&gt;
+&lt;p&gt;There is a widely known way to open a popup.&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; popup &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; window&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;url&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;name&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;settingstring&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Note that &lt;code class=&quot;language-text&quot;&gt;open()&lt;/code&gt; function have to be called synchronously, in other words directly
-in user action listener function. In other case, if you decided to call it asynchronously,
+in user action listener function. In other cases, if you decided to call it asynchronously,
 browsers block such popups.&lt;/p&gt;
-&lt;p&gt;For example the simplest click handler will be fine:&lt;/p&gt;
+&lt;p&gt;For example, the simplest click handler will be fine:&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token function-variable function&quot;&gt;signIn&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;token comment&quot;&gt;// ...&lt;/span&gt;
-	&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; poppup &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; window&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
-	&lt;span class=&quot;token comment&quot;&gt;// ...&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;// ...&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; poppup &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; window&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;// ...&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3&gt;Url&lt;/h3&gt;
-&lt;p&gt;Every third party OAuth API provides documentation of how to construct correct url for
-auth flow. One of the main query parameter should be called like &lt;code class=&quot;language-text&quot;&gt;redrect_uri&lt;/code&gt;.
-&lt;a href=&quot;https://developers.google.com/identity/protocols/OAuth2UserAgent&quot;&gt;There&lt;/a&gt; is google’s OAuth flow url parameters documented.
+&lt;p&gt;Every third party OAuth API provides documentation of how to construct correct URL for
+auth flow. One of the main query parameters should be called &lt;code class=&quot;language-text&quot;&gt;redrect_uri&lt;/code&gt;.
+&lt;a href=&quot;https://developers.google.com/identity/protocols/OAuth2UserAgent&quot;&gt;There&lt;/a&gt; is Google’s OAuth flow URL parameters documented.
 Check Step 2 -&gt; OAuth Endpoints tab.&lt;/p&gt;
-&lt;p&gt;So url for the newly opened popup can be like this:&lt;/p&gt;
+&lt;p&gt;So URL for the newly opened popup can be like this:&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; popup &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; window&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token string&quot;&gt;`https://accounts.google.com/o/oauth2/v2/auth?&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;${&lt;/span&gt;queryParamsString&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;`&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;where &lt;code class=&quot;language-text&quot;&gt;queryParamsString&lt;/code&gt; is:&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;const queryParamsString = &amp;#39;&amp;#39; +
@@ -43,8 +43,8 @@ Check Step 2 -&gt; OAuth Endpoints tab.&lt;/p&gt;
 &amp;#39;redirect_uri={our web app or server API url}&amp;amp;&amp;#39; +
 &amp;#39;response_type=token&amp;amp;&amp;#39; +
 &amp;#39;scope=admin&amp;#39;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Sometimes url for that popup have to be calculated on API side and you as a frontend developer
-have to retreive it first in order to use in your popup. In that case we can always open
+&lt;p&gt;Sometimes URL for that popup have to be calculated on API side and you as a frontend developer
+have to retrieve it first in order to use in your popup. In that case, we can always open
 popup synchronously with blank &lt;url&gt; argument, then load our &lt;code class=&quot;language-text&quot;&gt;redirect_url&lt;/code&gt; from the API and
 set it to our popup using &lt;code class=&quot;language-text&quot;&gt;location&lt;/code&gt; window’s API. Just like that:&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; clickHandler &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
@@ -52,16 +52,16 @@ set it to our popup using &lt;code class=&quot;language-text&quot;&gt;location&l
   &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; url &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;getUrl&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
   popup&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;location&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;href &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; url&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;That will redirect our popup window to the required url. After that action we can’t control
-popup behavior any more, except actions like closing that we are not interesting in yet.&lt;/p&gt;
+&lt;p&gt;That will redirect our popup window to the required URL. After that action, we can’t control
+popup behaviour any more, except actions like closing that we are not interested in yet.&lt;/p&gt;
 &lt;h3&gt;Checking popup state&lt;/h3&gt;
-&lt;p&gt;After redurecting popup to the url with different host from our’s, we should start process of
+&lt;p&gt;After a redirecting popup to the URL with a different host from our’s, we should start the process of
 continuous checking popup’s &lt;code class=&quot;language-text&quot;&gt;location.href&lt;/code&gt;. You may notice that trying to read that field
-throws error about restricted access to that field. It is ok, do not try to fix that!
-Instead we should wrap that field access to &lt;code class=&quot;language-text&quot;&gt;try/catch&lt;/code&gt; block.
-On that point we need to use setInterval() with callback that checks location of the popup.
-When you start to have access to &lt;code class=&quot;language-text&quot;&gt;href&lt;/code&gt; field and it is one of &lt;code class=&quot;language-text&quot;&gt;sucess_url&lt;/code&gt; or &lt;code class=&quot;language-text&quot;&gt;error_url&lt;/code&gt; we can
-close popup with &lt;code class=&quot;language-text&quot;&gt;popup.close()&lt;/code&gt; and set according result to our app.&lt;/p&gt;
+throws an error about restricted access to that field. It is ok, do not try to fix that!
+Instead, we should wrap that field access to &lt;code class=&quot;language-text&quot;&gt;try/catch&lt;/code&gt; block.
+On that point, we need to use setInterval() with a callback that checks the location of the popup.
+When you start to have access to the &lt;code class=&quot;language-text&quot;&gt;href&lt;/code&gt; field and it is one of &lt;code class=&quot;language-text&quot;&gt;sucess_url&lt;/code&gt; or &lt;code class=&quot;language-text&quot;&gt;error_url&lt;/code&gt; we can
+close popup with &lt;code class=&quot;language-text&quot;&gt;popup.close()&lt;/code&gt; and set according to result to our app.&lt;/p&gt;
 &lt;p&gt;There is some pseudo code for that implementation:&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;const clickHandler = async () =&amp;gt; {
   const popup = window.open(&amp;#39;&amp;#39;, null, &amp;#39;&amp;#39;);
@@ -91,13 +91,13 @@ const checkPopup = (popup) =&amp;gt; {
   });
 }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3&gt;And that’s it!&lt;/h3&gt;
-&lt;p&gt;Lets review our steps:&lt;/p&gt;
+&lt;p&gt;Let’s review our steps:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;open popup synchronously on user action&lt;/li&gt;
-&lt;li&gt;get popup url either synchronously or asynchronously&lt;/li&gt;
-&lt;li&gt;set popup.location.href to obtained url&lt;/li&gt;
+&lt;li&gt;get popup URL either synchronously or asynchronously&lt;/li&gt;
+&lt;li&gt;set popup.location.href to obtained URL&lt;/li&gt;
 &lt;li&gt;start popup checking&lt;/li&gt;
-&lt;li&gt;wait when popup will be redirected back to success or error urls and we can read them&lt;/li&gt;
+&lt;li&gt;wait when popup will be redirected back to success or error URLs and we can read them&lt;/li&gt;
 &lt;li&gt;close popup&lt;/li&gt;
 &lt;li&gt;check the result&lt;/li&gt;
 &lt;/ol&gt;</content:encoded></item></channel></rss>
