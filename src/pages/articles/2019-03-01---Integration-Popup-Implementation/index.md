@@ -24,9 +24,12 @@ In general, there are two main paths:
 
 Let's do it step by step
 
-#### Prerequesites
-[JavaScript](https://en.wikipedia.org/wiki/JavaScript)
-[async/await](https://hackernoon.com/understanding-async-await-in-javascript-1d81bb079b2c)
+### Prerequesites
+<a href="https://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a>
+
+<a href="https://hackernoon.com/understanding-async-await-in-javascript-1d81bb079b2c" target="_blank">async/await</a>
+
+<a href="https://www.learnrxjs.io/" target="_blank">RxJS Observable</a>
 
 
 ### Opening popup
@@ -60,10 +63,8 @@ const signIn = () => {
 
 ### Url
 
-Every third party OAuth API provides documentation of how to construct correct URL for
-auth flow. One of the main query parameters should be called `redrect_uri`.
-[There](https://developers.google.com/identity/protocols/OAuth2UserAgent) is Google's OAuth flow URL parameters documented.
-Check Step 2 -> OAuth Endpoints tab.
+Every third party OAuth API provides documentation of how to construct correct URL for auth flow. One of the main query parameters should be called `redrect_uri`.
+<a href="https://developers.google.com/identity/protocols/OAuth2UserAgent" target="_blank">There</a> is Google's OAuth flow URL parameters documented. Check Step 2 -> OAuth Endpoints tab.
 
 So URL for the newly opened popup can be like this:
 
@@ -109,10 +110,10 @@ On that point, we need to use setInterval() with a callback that checks the loca
 When you start to have access to the `href` field and it is one of `sucess_url` or `error_url` we can
 close popup with `popup.close()` and set according to result to our app.
 
-There is some pseudo code for that implementation:
+There is some pseudo code with promises for that implementation:
 
-```
-const clickHandler = async () => {
+```javascript
+const handleOpenPopup = async () => {
   const popup = window.open('', null, '');
   const url = await getUrl();
   popup.location.href = url;
@@ -141,14 +142,61 @@ const checkPopup = (popup) => {
 }
 ```
 
+If you are not familiar with `Promise` and `async / await` keywords there is similar logic implemented with Rx's `Observable` stream:
+
+```javascript
+const handleOpenPopup = () => {
+  const popup = window.open('', '', 'width=500,height=500');
+  // () -> Observable<string>
+  getUrl().pipe(
+    // good operator for side effects like this
+    tap((url) => {
+      popup.location.href = url;
+    }),
+    // string -> number
+    switchMap(() => interval(1000)),
+    // number -> string | undefined
+    map(() => {
+      if (popup.closed) {
+        return FAILED_URL;
+      }
+      return getHref(popup);
+    }),
+    // string | undefined -> string
+    // filter only valid results
+    filter(Boolean),
+    // string -> bool
+    map(href => href === SUCCESS_URL),
+    take(1),
+  )
+  .subscribe((result) => {
+    popup.close();
+    setState({ authSuccessful: result });
+  });
+};
+
+// Window -> string | undefined
+const getHref = (popup) => {
+  let href;
+  try {
+    href = popup.location.href;
+  } catch (e) {
+    console.log('Failed to get href. Popup window has origin that differs from your\'s');
+  }
+  return href;
+}
+```
+
+I prefer this one to promises because it is easy to implement data flow with atomic operations and it is easy to reason about each operation. Also here is an <a href="https://codepen.io/valmal/pen/gEWoPg" target="_blank">Example</a> of simple implementation of that flow. Check it out!
+
 ### And that's it!
 
 Let's review our steps:
 
-1. open popup synchronously on user action
+1. Open popup synchronously on user action
 2. get popup URL either synchronously or asynchronously
-3. set popup.location.href to obtained URL
-4. start popup checking
-5. wait when popup will be redirected back to success or error URLs and we can read them
-6. close popup
-7. check the result
+3. Set `popup.location.href` to obtained URL
+4. Start popup checking
+5. Wait when popup will be redirected back to success or error URL so that we can read them
+6. Check the result
+7. Close popup and handle result
