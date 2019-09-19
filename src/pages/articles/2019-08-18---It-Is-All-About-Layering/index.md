@@ -19,6 +19,7 @@ description: "Why do we need to keep our code layered?"
 
 <a href="https://reactjs.org/docs/hooks-intro.html" target="_blank">React hooks</a>
 
+### Go
 This article is just my thoughts on how I’m thinking about layering and how to apply it on different levels of the app.
 Maybe this help can help you to decide where it is applicable during your work routine.
 
