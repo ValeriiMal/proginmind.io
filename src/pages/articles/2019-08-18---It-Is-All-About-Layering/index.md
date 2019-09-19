@@ -5,7 +5,7 @@ layout: post
 draft: false
 path: "/posts/it-is-all-about-layering/"
 category: "Architecture"
-twitter: ""
+twitter: ""https://twitter.com/valeriimaltsev/status/1174782139235209216
 github: "https://github.com/ValeriiMal/proginmind.io/blob/master/src/pages/articles/2019-08-18---It-Is-All-About-Layering/index.md"
 tags:
   - "Javascript"
