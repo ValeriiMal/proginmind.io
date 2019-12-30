@@ -5,6 +5,8 @@ layout: post
 draft: false
 path: "/posts/build-your-utils/"
 category: "Tools"
+twitter: "https://twitter.com/valeriimaltsev/status/1211386011923730434"
+github: "https://github.com/ValeriiMal/proginmind.io/blob/master/src/pages/articles/build-your-own-utils.md"
 tags:
   - "Javascript"
   - "Web"
